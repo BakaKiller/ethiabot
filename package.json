@@ -1,0 +1,16 @@
+{
+  "name": "ethiarealbot",
+  "version": "1.0.0",
+  "description": "A bot for Ethiareal",
+  "main": "ethiareal.js",
+  "dependencies": {
+    "discord.js": "^11.1.0",
+    "jsonfile": "^3.0.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Biquet",
+  "license": "ISC"
+}
