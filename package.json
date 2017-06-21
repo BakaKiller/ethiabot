@@ -5,7 +5,9 @@
   "main": "ethiareal.js",
   "dependencies": {
     "discord.js": "^11.1.0",
-    "jsonfile": "^3.0.0"
+    "fs": "0.0.1-security",
+    "jsonfile": "^3.0.0",
+    "request": "^2.81.0"
   },
   "devDependencies": {},
   "scripts": {
