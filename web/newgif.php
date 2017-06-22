@@ -9,7 +9,7 @@
 $newgifs = $_POST['newgifs'];
 $cat = $_POST['cat'];
 
-$waitinggifs = json_decode(file_get_contents('../waitinggifs.json'));
+$waitinggifs = (array)json_decode(file_get_contents('../waitinggifs.json'));
 $gifs = (array)json_decode(file_get_contents('../gifs.json'));
 $cats = (array)json_decode(file_get_contents('../cats.json'));
 
