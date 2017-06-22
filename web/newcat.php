@@ -7,8 +7,8 @@
  */
 
 $newcats = strtolower($_POST['newcats']);
-$waitingcats = json_decode(file_get_contents('waitingcats.json'));
-$cats = json_decode(file_get_contents('cats.json'));
+$waitingcats = json_decode(file_get_contents('../waitingcats.json'));
+$cats = json_decode(file_get_contents('../cats.json'));
 
 $newcats = explode(',', $newcats);
 foreach ($newcats as $newcat) {
@@ -18,7 +18,7 @@ foreach ($newcats as $newcat) {
     }
 }
 
-if (file_put_contents('waitingcats.json', json_encode($waitingcats))) {
+if (file_put_contents('../waitingcats.json', json_encode($waitingcats))) {
     echo "Votre demande a été enregistrée !";
 } else {
     echo "Il y a eu un problème ! Contactez le gestionnaire du bot pour le lui signaler !";
