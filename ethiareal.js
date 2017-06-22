@@ -94,6 +94,7 @@ client.on('message', msg => {
             case 'kiss':
             case 'lick':
             case 'jojo':
+            case 'nibble':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
             case 'help':
