@@ -6,7 +6,7 @@
  * Time: 19:30
  */
 
-$newcats = $_POST['newcats'];
+$newcats = strtolower($_POST['newcats']);
 $waitingcats = json_decode(file_get_contents('waitingcats.json'));
 $cats = json_decode(file_get_contents('cats.json'));
 
