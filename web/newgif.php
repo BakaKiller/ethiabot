@@ -18,6 +18,7 @@ if (!in_array($cat, $cats)) {
     exit;
 }
 echo __LINE__;
+echo '<br /><br /><pre>' . print_r($gifs, true) . '</pre>';
 if (empty($gifs[$cat])) {
     $catgifs[$cat] = array();
 }
