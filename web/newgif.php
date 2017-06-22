@@ -10,8 +10,8 @@ $newgifs = $_POST['newgifs'];
 $cat = $_POST['cat'];
 
 $waitinggifs = json_decode(file_get_contents('../waitinggifs.json'));
-$gifs = json_decode(file_get_contents('../gifs.json'));
-$cats = json_decode(file_get_contents('../cats.json'));
+$gifs = (array)json_decode(file_get_contents('../gifs.json'));
+$cats = (array)json_decode(file_get_contents('../cats.json'));
 
 if (!in_array($cat, $cats)) {
     echo "Toi t'as essayé de tricher èé Heureusement, je suis magnanime. Allez, joue la honnêtement et propose une nouvelle catégorie si celle-là n'existe pas ^^";
