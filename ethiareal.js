@@ -25,8 +25,8 @@ const help = "Bonjour ! Voici l'aide de ce bot.\n\nPour exécuter une commande, 
     "\nEn cas de questions, n'hésite pas à t'adresser à <@139512885679357953> !\n\n" +
     "Une suggestion ? Envoie ça dans <#326780349793435648>\n" +
     "Une proposition ? Un énième gif ou groupe de gif à ajouter ? Ça se passe à l'adresse suivante :\n" +
-    "Ajouter une ou des catégorie(s) : 149.91.81.118/newcat.html\n" +
-    "Ajouter un ou des gif(s) :        149.91.81.118/newcat.html";
+    "Ajouter une ou des catégorie(s) : http://149.91.81.118/newcat.html\n" +
+    "Ajouter un ou des gif(s) :        http://149.91.81.118/newcat.html";
 let config = require('./settings.js');
 
 let message;
