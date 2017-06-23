@@ -23,7 +23,10 @@ const help = "Bonjour ! Voici l'aide de ce bot.\n\nPour exécuter une commande, 
     "`lick`       montre un amour démesuré mais pas toujours sain ?\n" +
     "`jojo`       exprime son bon goût par l'intermédiaire de memes de bon aloi\n" +
     "\nEn cas de questions, n'hésite pas à t'adresser à <@139512885679357953> !\n\n" +
-    "Une suggestion ? Une proposition ? Un énième gif ou groupe de gif à ajouter ? Envoie ça dans <#326780349793435648>";
+    "Une suggestion ? Envoie ça dans <#326780349793435648>\n" +
+    "Une proposition ? Un énième gif ou groupe de gif à ajouter ? Ça se passe à l'adresse suivante :\n" +
+    "Ajouter une ou des catégorie(s) : 149.91.81.118/newcat.html\n" +
+    "Ajouter un ou des gif(s) :        149.91.81.118/newcat.html";
 let config = require('./settings.js');
 
 let message;
