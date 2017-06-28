@@ -23,6 +23,8 @@ const help = "Bonjour ! Voici l'aide de ce bot.\n\nPour exécuter une commande, 
     "`lick`       montre un amour démesuré mais pas toujours sain ?\n" +
     "`jojo`       exprime son bon goût par l'intermédiaire de memes de bon aloi\n" +
     "`nibble`     exprime son attirance pour le goût de quelqu'un\n" +
+    "`facepalm`   exprime sa désapointance sur un sujet quelconque\n" +
+    "`clap`       montre une admiration sans égale mais tout à fait placide et platonique\n" +
     "\nEn cas de questions, n'hésite pas à t'adresser à <@139512885679357953> !\n\n" +
     "Une suggestion ? Envoie ça dans <#326780349793435648>\n" +
     "Une proposition ? Un énième gif ou groupe de gif à ajouter ? Ça se passe à l'adresse suivante :\n" +
@@ -99,6 +101,8 @@ client.on('message', msg => {
             case 'lick':
             case 'jojo':
             case 'nibble':
+            case 'facepalm':
+            case 'clap':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
             case 'help':
