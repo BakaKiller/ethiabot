@@ -26,8 +26,20 @@ function print_header($title) {
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <title>' . $title . '</title>
+    <style>
+    body.index.index-custom {
+        background-color: #f4f4f4;
+    }
+    .index-custom section {
+        margin: 20px;
+        background-color: #ffffff;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+        padding: 12px;
+        border-radius: 2px;
+    }
+</style>
 </head>
-<body id="page-top" class="index">';
+<body id="page-top" class="index index-custom">';
 }
 
 function print_footer() {
