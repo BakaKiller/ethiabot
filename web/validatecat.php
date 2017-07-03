@@ -17,6 +17,7 @@ echo '<style>
     width:100%;
     border-top: solid 1px;
     border-bottom: solid 1px;
+    padding: 3px;
 }
 .bar .cat {
     font-size: 20px;
