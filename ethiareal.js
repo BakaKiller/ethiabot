@@ -60,6 +60,9 @@ function getgif(type) {
 
 client.on('message', msg => {
     if (msg.content.substr(0, prefix.length) === prefix) {
+        if (msg.author.id === "163688614205718528") {
+            msg.channel.send('Très bien, ô grande maîtresse, je m\'exécute sur le champs.');
+        }
         message = (msg.content.substr(prefix.length)).toLowerCase();
         messageparts = message.split(' ');
         switch (messageparts[0]) {
