@@ -1,19 +1,7 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link href="template/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="template/css/freelancer.min.css" rel="stylesheet">
-
-    <link href="template/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <title>Ajouter des catégorie</title>
-</head>
-<body id="page-top" class="index">
+<?php
+require_once('lib.php');
+echo print_header('Ajouter une catégorie');
+?>
 <section id="contact">
     <div class="container">
         <div class="row">
