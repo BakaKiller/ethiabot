@@ -15,14 +15,10 @@ echo print_header('Valider les nouvelles catégories');
 echo '<style>
 .bar {
     width:100%;
+    border: solid 1px;
 }
 .bar .cat {
-    font-size: 15px;
-    border: solid 1px;
-    border-right: none;
-}
-.bar .btns {
-    border
+    font-size: 20px;
 }
 </style>';
 echo '<section class=".container-fluid">';
