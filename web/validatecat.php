@@ -15,7 +15,8 @@ echo print_header('Valider les nouvelles catégories');
 echo '<style>
 .bar {
     width:100%;
-    border: solid 1px;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
 }
 .bar .cat {
     font-size: 20px;
