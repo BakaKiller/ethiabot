@@ -71,3 +71,7 @@ function get_cat_list($waiting = false) {
         return json_decode(file_get_contents('../cats.json'));
     }
 }
+
+function set_cat_list($waiting, $catlist) {
+    return file_put_contents('../' . ($waiting ? 'waiting' : '') . 'cats.json', json_encode($catlist));
+}
