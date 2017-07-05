@@ -70,8 +70,9 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
                     button.parent().children('button').attr('disabled', true);
                     $.post(window.location.href, {ajax:true, data:infos}, function(data) {
                         if (data === "ok") {
-                            button.parent().parent().fadeOut();
-                            button.parent().parent().remove();
+                            button.parent().parent().fadeOut(400, function() {
+                                button.parent().parent().remove();
+                            });
                         } else {
                             alert(data);
                         }
