@@ -71,6 +71,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
                     $.post(window.location.href, {ajax:true, data:infos}, function(data) {
                         if (data === "ok") {
                             button.parent().parent().fadeOut();
+                            button.parent().parent().remove();
                         } else {
                             alert(data);
                         }
