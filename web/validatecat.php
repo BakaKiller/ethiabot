@@ -63,7 +63,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
             $(document).ready(function() {
                 $('button[name="valid"], button[name="delete"]').click(function () {
                     var infos = getinfos(this);
-                    var button = this;
+                    var button = $(this);
                     button.children("i").attr('class', 'fa fa-spinner fa-pulse');
                     button.parent().children('button').attr('disabled', true);
                     $.post(window.location.href, {ajax:true, data:infos}, function(data) {
