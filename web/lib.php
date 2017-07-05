@@ -47,12 +47,18 @@ function print_footer() {
 </html>';
 }
 
-function make_bar($cat) {
+function make_bar($cat, $key = 0) {
     $bar = '<div class="bar row">';
     $bar .= '<div class="cat col-xs-10 col-sm-10 col-md-10 col-lg-10">' . $cat . '</div>';
     $bar .= '<div class="btns col-xs-2 col-sm-2 col-md-2 col-lg-2">';
-    $bar .= '<button class="btn btn-success" name="' . $cat . '_valid"><i class="fa fa-check"></i></button>';
-    $bar .= '<button class="btn btn-danger" name="' . $cat . '_cancel"><i class="fa fa-times"></i></button>';
+    $bar .=
+            '<button class="btn btn-success" name="valid" data-key="' . $key . '" data-cat="' . $cat . '">
+                <i class="fa fa-check"></i>
+            </button>';
+    $bar .=
+            '<button class="btn btn-danger" name="delete" data-key="' . $key . '" data-cat="' . $cat . '">
+                <i class="fa fa-times"></i>
+            </button>';
     $bar .= '</div>';
     $bar .= '</div>';
     return $bar;
