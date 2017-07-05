@@ -1,5 +1,6 @@
 <?php
 require_once('lib.php');
+$cats = get_cat_list();
 echo print_header('Ajouter un gif');
 ?>
 <section id="contact">
@@ -15,8 +16,14 @@ echo print_header('Ajouter un gif');
                 <form name="sentMessage" id="contactForm" method="post" action="newgif_treat.php">
                     <div class="row control-group">
                         <div class="form-group col-xs-12 floating-label-form-group controls">
-                            <label for="cat">Nom de la catégorie (Elle doit déjà exister !)</label>
-                            <input type="text" class="form-control" placeholder="Nom de la catégorie (Elle doit déjà exister !)" id="cat" required data-validation-required-message="Et je mets ça où si tu me dis pas ?" name="cat">
+                            <label for="cat">Catégorie </label>
+                            <select name="cat" id="cat" class="form-control" required data-validation-required-message="Et je mets ça où si tu me dis pas ?">
+                                <?php
+                                foreach ($cats as $cat) {
+                                    echo('<option value="' . $cat . '">' . $cat . '</option>');
+                                }
+                                ?>
+                            </select>
                             <p class="help-block text-danger"></p>
                         </div>
                     </div>

@@ -57,3 +57,11 @@ function make_bar($cat) {
     $bar .= '</div>';
     return $bar;
 }
+
+function get_cat_list($waiting = false) {
+    if ($waiting) {
+        return json_decode(file_get_contents('../waitingcats.json'));
+    } else {
+        return json_decode(file_get_contents('../cats.json'));
+    }
+}

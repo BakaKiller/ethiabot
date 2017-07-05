@@ -6,9 +6,11 @@
  * Time: 19:30
  */
 
+require_once('lib.php');
+
 $newcats = strtolower($_POST['newcats']);
-$waitingcats = json_decode(file_get_contents('../waitingcats.json'));
-$cats = json_decode(file_get_contents('../cats.json'));
+$waitingcats = get_cat_list(true);
+$cats = get_cat_list(false);
 
 $newcats = explode(',', $newcats);
 foreach ($newcats as $newcat) {
