@@ -16,7 +16,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
     $data = json_decode($_POST['data']);
     try {
         switch ($data->action) {
-            case 'validate':
+            case 'valid':
                 $cats[] = $data->name;
             case 'delete':
                 unset($waitingcats[$data->pos]);
@@ -28,6 +28,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
         set_cat_list(false, $cats);
     } catch (Exception $e) {
         echo 'Error : ' . $e->getMessage();
+        exit;
     }
     echo "ok";
 } else {
