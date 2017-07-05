@@ -24,6 +24,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
             default:
                 throw new Exception('Mauvais message wesh');
         }
+        sort($waitingcats);
         set_cat_list(true, $waitingcats);
         set_cat_list(false, $cats);
     } catch (Exception $e) {
