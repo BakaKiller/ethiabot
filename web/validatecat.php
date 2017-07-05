@@ -19,7 +19,7 @@ if (isset($_POST['ajax']) && $_POST['ajax'] && isset($_POST['data']) && $_POST['
             case 'valid':
                 $cats[] = $data->name;
             case 'delete':
-                unset($waitingcats[$data->pos]);
+                unset($waitingcats[$data->key]);
                 break;
             default:
                 throw new Exception('Mauvais message wesh');
