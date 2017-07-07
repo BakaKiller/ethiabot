@@ -115,6 +115,7 @@ client.on('message', msg => {
             case 'nibble':
             case 'facepalm':
             case 'clap':
+            case 'pout':
             case 'blush':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
