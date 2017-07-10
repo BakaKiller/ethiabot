@@ -1,6 +1,8 @@
 <?php
 require_once('lib.php');
 $cats = get_cat_list();
+$gifs = get_gif_list();
+
 echo print_header('Ajouter un gif');
 ?>
 <section id="contact">
@@ -20,7 +22,7 @@ echo print_header('Ajouter un gif');
                             <select name="cat" id="cat" class="form-control" required data-validation-required-message="Et je mets ça où si tu me dis pas ?">
                                 <?php
                                 foreach ($cats as $cat) {
-                                    echo('<option value="' . $cat . '">' . $cat . '</option>');
+                                    echo('<option value="' . $cat . '">' . $cat . '(' . count($gifs->$cat) . ')</option>');
                                 }
                                 ?>
                             </select>

@@ -75,3 +75,11 @@ function get_cat_list($waiting = false) {
 function set_cat_list($waiting, $catlist) {
     return file_put_contents('../' . ($waiting ? 'waiting' : '') . 'cats.json', json_encode($catlist));
 }
+
+function get_gif_list($waiting = false) {
+    if ($waiting) {
+        return json_decode(file_get_contents('../waitinggifs.json'));
+    } else {
+        return json_decode(file_get_contents('../gifs.json'));
+    }
+}
