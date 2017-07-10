@@ -22,7 +22,7 @@ echo print_header('Ajouter un gif');
                             <select name="cat" id="cat" class="form-control" required data-validation-required-message="Et je mets ça où si tu me dis pas ?">
                                 <?php
                                 foreach ($cats as $cat) {
-                                    echo('<option value="' . $cat . '">' . $cat . '(' . count($gifs->$cat) . ')</option>');
+                                    echo('<option value="' . $cat . '">' . $cat . ' (' . count($gifs->$cat) . ')</option>');
                                 }
                                 ?>
                             </select>
