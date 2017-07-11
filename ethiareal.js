@@ -69,8 +69,8 @@ client.on('messageDelete', function(msg) {
 });
 
 client.on('message', msg => {
-    if (message.channel_id === 332988697630736394) {
-        // msg.guild.getUser(301069123591471114, false).setNickname(msg.guild.getUser(301069123591471114, false).nickname.toLowerCase());
+    if (message.channel.id === 332988697630736394) {
+        msg.guild.getUser(301069123591471114, false).setNickname(msg.guild.getUser(301069123591471114, false).nickname.toLowerCase());
     }
     if (msg.content.substr(0, prefix.length) === prefix) {
         if (msg.author.id === "163688614205718528") {
