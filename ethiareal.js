@@ -69,6 +69,7 @@ client.on('messageDelete', function(msg) {
 });
 
 client.on('message', msg => {
+    console.log(msg.channel.id);
     if (msg.channel.id === 332988697630736394) {
         msg.guild.getUser(301069123591471114, false).setNickname(msg.guild.getUser(301069123591471114, false).nickname.toLowerCase());
     }
