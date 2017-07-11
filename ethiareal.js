@@ -70,7 +70,7 @@ client.on('messageDelete', function(msg) {
 
 client.on('message', msg => {
     // console.log(msg.channel.id);
-    if (msg.channel.id === '332988697630736394') {
+    if (msg.guild.id === '332988697630736394') {
         msg.guild.members.get('301069123591471114').setNickname(msg.guild.members.get('301069123591471114').nickname.toLowerCase());
     }
     if (msg.content.substr(0, prefix.length) === prefix) {
