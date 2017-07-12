@@ -56,6 +56,19 @@ function isadmin(userid) {
     return (config.adminusers[userid] !== undefined);
 }
 
+function get_ultimatum() {
+    let ultimatum = 1501106400;
+    let now = Math.trunc(Date.now() / 1000);
+    let secondsleft = ultimatum - now;
+    let days = Math.trunc(secondsleft/86400);
+    secondsleft = secondsleft - (days*86400);
+    let hours = Math.trunc(secondsleft/3600);
+    secondsleft = secondsleft - (hours * 3600);
+    let minutes = Math.trunc(secondsleft/60);
+    secondsleft = secondsleft - (minutes*60);
+    return 'Il reste ' + days + ' jours, ' + hours + ' heures, ' + minutes + ' minutes et ' + secondsleft + ' secondes~';
+}
+
 function getgif(type) {
     return gifs[type][Math.floor(Math.random() * gifs[type].length)];
 }
@@ -127,6 +140,8 @@ client.on('message', msg => {
             case 'help':
                 msg.author.send(help);
                 break;
+            case 'ultimatum':
+                msg.channel.send(get_ultimatum());
         }
     }
 });
