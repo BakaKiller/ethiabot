@@ -142,7 +142,7 @@ client.on('message', msg => {
             case 'help':
                 msg.author.send(help);
                 break;
-            case 'ultimatum':
+            case 'end':
                 msg.channel.send(get_ultimatum());
         }
     }
