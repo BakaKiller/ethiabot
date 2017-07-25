@@ -85,6 +85,14 @@ client.on('messageDelete', function(msg) {
     }
 });
 
+client.on('guildMemberAdd', function (guild, member) {
+    guild.channels.get('298767341620035584').send('Bienvenue à l\'Académie Ethiareal <@' + member.id + '> !');
+});
+
+client.on('guildMemberRemove', function(guild, member) {
+    guild.channel.get('298767341620035584').send('Au revoir, en espérant te revoir un jour, ' + member.nickname + '...');
+});
+
 client.on('message', msg => {
     // console.log(msg.channel.id);
     if (msg.guild) {
