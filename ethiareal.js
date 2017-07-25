@@ -90,7 +90,7 @@ client.on('guildMemberAdd', function (member) {
 });
 
 client.on('guildMemberRemove', function(member) {
-    member.guild.channels.get('298767341620035584').send('Au revoir, en espérant te revoir un jour, ' + member.nickname + '...');
+    member.guild.channels.get('298767341620035584').send('Au revoir, en espérant te revoir un jour, ' + member.user.tag + '...');
 });
 
 client.on('message', msg => {
