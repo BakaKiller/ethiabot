@@ -44,7 +44,7 @@ let messageparts;
 let prefix = config.prefix;
 let gifs;
 
-jsonfile.readFile('gifs.json', function (err, obj) {
+jsonfile.readFile('json.ethiabot.ovh/gifs.json', function (err, obj) {
     if (err) {
         console.log(err.message);
     } else {

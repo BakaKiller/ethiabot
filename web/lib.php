@@ -66,20 +66,20 @@ function make_bar($cat, $key = 0) {
 
 function get_cat_list($waiting = false) {
     if ($waiting) {
-        return json_decode(file_get_contents('../waitingcats.json'));
+        return json_decode(file_get_contents('../json/waitingcats.json'));
     } else {
-        return json_decode(file_get_contents('../cats.json'));
+        return json_decode(file_get_contents('../json/cats.json'));
     }
 }
 
 function set_cat_list($waiting, $catlist) {
-    return file_put_contents('../' . ($waiting ? 'waiting' : '') . 'cats.json', json_encode($catlist));
+    return file_put_contents('../json/' . ($waiting ? 'waiting' : '') . 'cats.json', json_encode($catlist));
 }
 
 function get_gif_list($waiting = false) {
     if ($waiting) {
-        return json_decode(file_get_contents('../waitinggifs.json'));
+        return json_decode(file_get_contents('../json/waitinggifs.json'));
     } else {
-        return json_decode(file_get_contents('../gifs.json'));
+        return json_decode(file_get_contents('../json/gifs.json'));
     }
 }

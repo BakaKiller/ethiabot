@@ -9,9 +9,9 @@
 $newgifs = $_POST['newgifs'];
 $cat = $_POST['cat'];
 
-$waitinggifs = (array)json_decode(file_get_contents('../waitinggifs.json'));
-$gifs = (array)json_decode(file_get_contents('../gifs.json'));
-$cats = (array)json_decode(file_get_contents('../cats.json'));
+$waitinggifs = (array)json_decode(file_get_contents('../json/waitinggifs.json'));
+$gifs = (array)json_decode(file_get_contents('../json/gifs.json'));
+$cats = (array)json_decode(file_get_contents('../json/cats.json'));
 
 if (!in_array($cat, $cats)) {
     echo "Toi t'as essayé de tricher èé Heureusement, je suis magnanime. Allez, joue la honnêtement et propose une nouvelle catégorie si celle-là n'existe pas ^^";
@@ -35,7 +35,7 @@ foreach ($newgifs as $newgif) {
     }
 }
 
-if (file_put_contents('../waitinggifs.json', str_replace('\\', '', json_encode($waitinggifs)))) {
+if (file_put_contents('../json/waitinggifs.json', str_replace('\\', '', json_encode($waitinggifs)))) {
     echo "Votre demande a été enregistrée !";
 } else {
     echo "Il y a eu un problème ! Contactez le gestionnaire du bot pour le lui signaler !";
