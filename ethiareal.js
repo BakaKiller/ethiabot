@@ -44,13 +44,19 @@ let messageparts;
 let prefix = config.prefix;
 let gifs;
 
-jsonfile.readFile('http://json.ethiabot.ovh/gifs.json', function (err, obj) {
-    if (err) {
-        console.log(err.message);
-    } else {
-        gifs = obj;
+request.get('http://json.ethiabot.ovh/gifs.json', function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+        gifs = JSON.parse(body);
     }
 });
+
+// jsonfile.readFile('http://json.ethiabot.ovh/gifs.json', function (err, obj) {
+//     if (err) {
+//         console.log(err.message);
+//     } else {
+//         gifs = obj;
+//     }
+// });
 
 client.on('ready', function () {
     console.log(`Logged in as ${client.user.tag}!`);
