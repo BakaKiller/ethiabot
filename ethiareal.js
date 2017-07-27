@@ -66,6 +66,12 @@ function getgif(type) {
     return gifs[type][Math.floor(Math.random() * gifs[type].length)];
 }
 
+function getnsfwgif(chan, type) {
+    if (chan.type !== 'text' || (chan.type === 'text' && chan.nsfw())) {
+        return getgif(type);
+    }
+}
+
 client.on('messageDelete', function(msg) {
     if (msg.author.id === "130453221331173386") {
         msg.channel.send('<@' + msg.author.id + '> a écrit mais n\'a pas assumé :\n```\n' + msg.content + '\n```')
@@ -144,6 +150,8 @@ client.on('message', msg => {
             case 'sparkles':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
+            case 'nsfw':
+                msg.channel.send(getnsfwgif(msg.channel, messageparts[0]));
             case 'help':
                 msg.author.send(help);
                 break;
