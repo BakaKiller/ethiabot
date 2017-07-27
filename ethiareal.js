@@ -152,6 +152,7 @@ client.on('message', msg => {
                 break;
             case 'nsfw':
                 msg.channel.send(getnsfwgif(msg.channel, messageparts[0]));
+                break;
             case 'help':
                 msg.author.send(help);
                 break;
