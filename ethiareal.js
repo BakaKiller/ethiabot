@@ -222,7 +222,7 @@ client.on('message', msg => {
                         console.log('out : ' + i);
                         if (forbiddenkeywords.includes(searcharray[i])) {
                             console.log('in : ' + i);
-                            msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author + ':\n' + msg.content + '```');
+                            msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author.tag + ':\n' + msg.content + '```');
                             cansearch = false;
                         }
                     }
