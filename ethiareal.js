@@ -76,7 +76,7 @@ function getnsfwgif(chan, type) {
     }
 }
 
-function getgelbooru(search) {
+function getgelbooru(search, chan) {
     request.get('https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags=' + search, function(error, response, body) {
         if (!error && response.statusCode === 200) {
             let images = JSON.parse(body);
@@ -99,10 +99,10 @@ function getgelbooru(search) {
                 }
             } while (!img);
             if (!img) {
-                return 'Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...';
+                chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
             } else {
                 img = img.file_url.replace('\\', '');
-                return 'http:' + img;
+                chan.send('http:' + img);
             }
         }
     });
@@ -193,7 +193,7 @@ client.on('message', msg => {
                 if (!msg.channel.nsfw) {
                     msg.reply(alertnsfw);
                 } else {
-                    msg.channel.send(getgelbooru(message.substr(messageparts[0].length)));
+                    getgelbooru(message.substr(messageparts[0].length), msg.channel);
                 }
                 break;
             case 'help':
