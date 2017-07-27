@@ -217,6 +217,7 @@ client.on('message', msg => {
                     cansearch = true;
                     search = message.substr(messageparts[0].length);
                     searcharray = search.split(' ');
+                    console.log(JSON.stringify(searcharray));
                     for (let i = 0; i < searcharray.length; i++) {
                         if (searcharray[i] in forbiddenkeywords) {
                             msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author + ':\n' + msg.content + '```');
