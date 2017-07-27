@@ -45,6 +45,7 @@ let prefix = config.prefix;
 let gifs;
 let alertnsfw = "Ce chan n'est pas nsfw ! Vous ne voulez quand même pas invoquer de telles choses à la vue de tous ? :open_mouth:";
 let search;
+let cansearch;
 let searcharray;
 let forbiddenkeywords = [
     'loli',
@@ -213,14 +214,18 @@ client.on('message', msg => {
                 if (!msg.channel.nsfw && msg.channel.type !== 'dm') {
                     msg.reply(alertnsfw);
                 } else {
+                    cansearch = true;
                     search = message.substr(messageparts[0].length);
                     searcharray = search.split(' ');
                     for (let i = 0; i < searcharray.length; i++) {
                         if (searcharray[i] in forbiddenkeywords) {
                             msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author + ':\n' + msg.content + '```');
+                            cansearch = false;
                         }
                     }
-                    getgelbooru(search, msg.channel);
+                    if (cansearch) {
+                        getgelbooru(search, msg.channel);
+                    }
                 }
                 break;
             case 'help':
