@@ -43,8 +43,24 @@ let messageparts;
 
 let prefix = config.prefix;
 let gifs;
-
 let alertnsfw = "Ce chan n'est pas nsfw ! Vous ne voulez quand même pas invoquer de telles choses à la vue de tous ? :open_mouth:";
+let search;
+let searcharray;
+let forbiddenkeywords = [
+    'loli',
+    'lolicon',
+    'shota',
+    'shotacon',
+    'underage',
+    'child',
+    'children',
+    'rape',
+    'pedo',
+    'pedophilia',
+    'zoophilia',
+    'bestiality',
+    'vore'
+];
 
 request.get('http://json.ethiabot.ovh/gifs.json', function(error, response, body) {
     if (!error && response.statusCode === 200) {
@@ -93,7 +109,7 @@ function getgelbooru(search, chan) {
                     if (id in images) {
                         img = images[id];
                         tags = img.tags.split(' ');
-                        if (tags.includes('loli') || tags.includes('child') || tags.includes('children') || tags.includes('underage')) {
+                        if (tags.includes('loli') || tags.includes('child') || tags.includes('children') || tags.includes('underage') || tags.includes('shotacon')) {
                             images.splice(id, 1);
                             img = false;
                         }
@@ -194,10 +210,17 @@ client.on('message', msg => {
                 msg.channel.send(getnsfwgif(msg.channel, messageparts[0]));
                 break;
             case 'gelbooru':
-                if (!msg.channel.nsfw) {
+                if (!msg.channel.nsfw && msg.channel.type !== 'dm') {
                     msg.reply(alertnsfw);
                 } else {
-                    getgelbooru(message.substr(messageparts[0].length), msg.channel);
+                    search = message.substr(messageparts[0].length);
+                    searcharray = search.split(' ');
+                    for (let i = 0; i < searcharray.length; i++) {
+                        if (searcharray[i] in forbiddenkeywords) {
+                            msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author + ':\n' + msg.content + '```');
+                        }
+                    }
+                    getgelbooru(search, msg.channel);
                 }
                 break;
             case 'help':
