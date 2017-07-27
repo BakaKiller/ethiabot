@@ -79,30 +79,34 @@ function getnsfwgif(chan, type) {
 function getgelbooru(search, chan) {
     request.get('https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags=' + search, function(error, response, body) {
         if (!error && response.statusCode === 200) {
-            let images = JSON.parse(body);
-            let img = null;
-            let id = null;
-            let tags = null;
-            do {
-                if (images.length < 1) {
-                    img = false;
-                    break;
-                }
-                id = Math.floor(Math.random() * images.length - 1) + 1;
-                if (id in images) {
-                    img = images[id];
-                    tags = img.tags.split(' ');
-                    if (tags.includes('loli') || tags.includes('child') || tags.includes('children') || tags.includes('underage')) {
-                        images.splice(id, 1);
+            if (body.length > 0) {
+                let images = JSON.parse(body);
+                let img = null;
+                let id = null;
+                let tags = null;
+                do {
+                    if (images.length < 1) {
                         img = false;
+                        break;
                     }
+                    id = Math.floor(Math.random() * images.length - 1) + 1;
+                    if (id in images) {
+                        img = images[id];
+                        tags = img.tags.split(' ');
+                        if (tags.includes('loli') || tags.includes('child') || tags.includes('children') || tags.includes('underage')) {
+                            images.splice(id, 1);
+                            img = false;
+                        }
+                    }
+                } while (!img);
+                if (!img) {
+                    chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
+                } else {
+                    img = img.file_url.replace('\\', '');
+                    chan.send('http:' + img);
                 }
-            } while (!img);
-            if (!img) {
-                chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
             } else {
-                img = img.file_url.replace('\\', '');
-                chan.send('http:' + img);
+                chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
             }
         }
     });
