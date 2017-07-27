@@ -69,6 +69,8 @@ function getgif(type) {
 function getnsfwgif(chan, type) {
     if (chan.type !== 'text' || (chan.type === 'text' && chan.nsfw())) {
         return getgif(type);
+    } else {
+        return "Ce chan n'est pas nsfw ! Vous ne voulez quand même pas invoquer de telles choses à la vue de tous ? :open_mouth:";
     }
 }
 
