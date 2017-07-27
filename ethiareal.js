@@ -220,7 +220,7 @@ client.on('message', msg => {
                     console.log(JSON.stringify(searcharray));
                     for (let i = 0; i < searcharray.length; i++) {
                         console.log('out : ' + i);
-                        if (searcharray[i] in forbiddenkeywords) {
+                        if (forbiddenkeywords.includes(searcharray[i])) {
                             console.log('in : ' + i);
                             msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author + ':\n' + msg.content + '```');
                             cansearch = false;
