@@ -2,9 +2,11 @@
  * Created by Baka Killer on 21/06/2017.
  */
 const jsonfile = require('jsonfile');
+const EventEmitter = require('events');
 
-class Settings {
+class Settings extends EventEmitter{
     constructor() {
+        super();
         this.Adminusers = {};
         this.Prefix = ';';
         this.Token = '';
@@ -12,6 +14,7 @@ class Settings {
         this.Helpintro = '';
         this.Helpoutro = '';
         this.Jsonaddress = '';
+        this.ready = new Event('ready');
         let self = this;
         jsonfile.readFile('settings.json', function (err, obj) {
                 if (err) {
@@ -24,6 +27,7 @@ class Settings {
                     self.Helpintro = obj.helpintro;
                     self.Helpoutro = obj.helpoutro;
                     self.Jsonaddress = obj.jsonaddress;
+                    self.emit('ready');
                 }
         });
     }

@@ -219,7 +219,7 @@ client.on('message', msg => {
     }
 });
 
-if (config.token) {
+config.on('ready', function() {
     console.log(config.token);
     client.login(config.token);
-}
+});
