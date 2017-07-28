@@ -31,6 +31,9 @@ const help = "Bonjour ! Voici l'aide de ce bot.\n\nPour exécuter une commande, 
     "`stare`      OwO\n" +
     "`pantsu`     montre... Enfin, voilà quoi" +
     "`sparkles`   brille !\n" +
+    "`highfive`   good job maaaaaan\n" +
+    "`nsfw`       [nsfw] moins intéressant que la commande suivante !" +
+    "`gelbooru`   [nsfw] assorti d'un ou plusieurs mot clés...\n" +
     "\nEn cas de questions, n'hésite pas à t'adresser à <@139512885679357953> !\n\n" +
     "Une suggestion ? Envoie ça dans <#326780349793435648>\n" +
     "Une proposition ? Un énième gif ou groupe de gif à ajouter ? Ça se passe à l'adresse suivante :\n" +
@@ -205,6 +208,7 @@ client.on('message', msg => {
             case 'stare':
             case 'pantsu':
             case 'sparkles':
+            case 'highfive':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
             case 'nsfw':
