@@ -14,7 +14,6 @@ class Settings extends EventEmitter{
         this.Helpintro = '';
         this.Helpoutro = '';
         this.Jsonaddress = '';
-        this.ready = new Event('ready');
         let self = this;
         jsonfile.readFile('settings.json', function (err, obj) {
                 if (err) {
