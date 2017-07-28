@@ -31,101 +31,56 @@ let forbiddenkeywords = [
     'vore'
 ];
 
-request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-        gifs = JSON.parse(body);
-    }
-});
 
-request.get(config.jsonaddress + '/help.json', function(error, response, body) {
-    if (!error && response.statusCode === 200) {
-        let helpjson = JSON.parse(body);
-        let localhelp = '';
-        for (let key in helpjson) {
-            if (!helpjson.hasOwnProperty(key)) {
-                continue;
-            }
-            localhelp += '`' + key + '`    ' + helpjson[key] + "\n";
+// EVENTS **************************************************************************************************************
+
+config.on('ready', function() {
+    //get gifs list
+    request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            gifs = JSON.parse(body);
         }
-        help = config.helpintro + localhelp + config.helpoutro;
+    });
+
+    // get help
+    request.get(config.jsonaddress + '/help.json', function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            let helpjson = JSON.parse(body);
+            let localhelp = '';
+            for (let key in helpjson) {
+                if (!helpjson.hasOwnProperty(key)) {
+                    continue;
+                }
+                localhelp += '`' + key + '`    ' + helpjson[key] + "\n";
+            }
+            help = config.helpintro + localhelp + config.helpoutro;
+            help = help.replace('{{prefix}}', config.prefix);
+        }
+    });
+
+    // add guild member add and remove functions
+    if (config.welcomechan) {
+        client.on('guildMemberAdd', function (member) {
+            member.guild.channels.get(config.welcomechan).send('Bienvenue à l\'Académie Ethiareal <@' + member.id + '> !');
+        });
+
+        client.on('guildMemberRemove', function (member) {
+            member.guild.channels.get(config.welcomechan).send('Au revoir, en espérant te revoir un jour, ' + member.user.tag + '...');
+        });
     }
+
+    client.login(config.token);
 });
 
 client.on('ready', function () {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
-function isadmin(userid) {
-    return (config.adminusers[userid] !== undefined);
-}
-
-function get_ultimatum() {
-    return 'Hein ? Quoi ? Non, cette fonction n\'existe pas non <<';
-}
-
-function getgif(type) {
-    return gifs[type][Math.floor(Math.random() * gifs[type].length)];
-}
-
-function getnsfwgif(chan, type) {
-    if (chan.type !== 'text' || (chan.type === 'text' && chan.nsfw)) {
-        return getgif(type);
-    } else {
-        return alertnsfw;
-    }
-}
-
-function getgelbooru(search, chan) {
-    request.get('https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags=' + search, function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-            if (body.length > 0) {
-                let images = JSON.parse(body);
-                let img = null;
-                let id = null;
-                let tags = null;
-                do {
-                    if (images.length < 1) {
-                        img = false;
-                        break;
-                    }
-                    id = Math.floor(Math.random() * images.length - 1) + 1;
-                    if (id in images) {
-                        img = images[id];
-                        tags = img.tags.split(' ');
-                        if (tags.includes('loli') || tags.includes('child') || tags.includes('children') || tags.includes('underage') || tags.includes('shotacon')) {
-                            images.splice(id, 1);
-                            img = false;
-                        }
-                    }
-                } while (!img);
-                if (!img) {
-                    chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
-                } else {
-                    img = img.file_url.replace('\\', '');
-                    chan.send('http:' + img);
-                }
-            } else {
-                chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
-            }
-        }
-    });
-}
-
 client.on('messageDelete', function(msg) {
     if (msg.author.id === "130453221331173386") {
         msg.channel.send('<@' + msg.author.id + '> a écrit mais n\'a pas assumé :\n```\n' + msg.content + '\n```')
     }
 });
-
-if (config.welcomechan) {
-    client.on('guildMemberAdd', function (member) {
-        member.guild.channels.get(config.welcomechan).send('Bienvenue à l\'Académie Ethiareal <@' + member.id + '> !');
-    });
-
-    client.on('guildMemberRemove', function (member) {
-        member.guild.channels.get(config.welcomechan).send('Au revoir, en espérant te revoir un jour, ' + member.user.tag + '...');
-    });
-}
 
 client.on('message', msg => {
     if (msg.guild) {
@@ -219,7 +174,61 @@ client.on('message', msg => {
     }
 });
 
-config.on('ready', function() {
-    console.log(config.token);
-    client.login(config.token);
-});
+
+// LIB *****************************************************************************************************************
+
+function isadmin(userid) {
+    return (config.adminusers[userid] !== undefined);
+}
+
+function get_ultimatum() {
+    return 'Hein ? Quoi ? Non, cette fonction n\'existe pas non <<';
+}
+
+function getgif(type) {
+    return gifs[type][Math.floor(Math.random() * gifs[type].length)];
+}
+
+function getnsfwgif(chan, type) {
+    if (chan.type !== 'text' || (chan.type === 'text' && chan.nsfw)) {
+        return getgif(type);
+    } else {
+        return alertnsfw;
+    }
+}
+
+function getgelbooru(search, chan) {
+    request.get('https://gelbooru.com/index.php?page=dapi&s=post&q=index&json=1&tags=' + search, function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            if (body.length > 0) {
+                let images = JSON.parse(body);
+                let img = null;
+                let id = null;
+                let tags = null;
+                do {
+                    if (images.length < 1) {
+                        img = false;
+                        break;
+                    }
+                    id = Math.floor(Math.random() * images.length - 1) + 1;
+                    if (id in images) {
+                        img = images[id];
+                        tags = img.tags.split(' ');
+                        if (tags.includes('loli') || tags.includes('child') || tags.includes('children') || tags.includes('underage') || tags.includes('shotacon')) {
+                            images.splice(id, 1);
+                            img = false;
+                        }
+                    }
+                } while (!img);
+                if (!img) {
+                    chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
+                } else {
+                    img = img.file_url.replace('\\', '');
+                    chan.send('http:' + img);
+                }
+            } else {
+                chan.send('Pardonnez-moi, je n\'ai rien trouvé de satisfaisant...');
+            }
+        }
+    });
+}
