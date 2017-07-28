@@ -149,7 +149,6 @@ client.on('guildMemberRemove', function(member) {
 });
 
 client.on('message', msg => {
-    // console.log(msg.channel.id);
     if (msg.guild) {
         if (msg.guild.id === '332988697630736394') {
             msg.guild.members.get('301069123591471114').setNickname(msg.guild.members.get('301069123591471114').nickname.toLowerCase());
@@ -221,11 +220,8 @@ client.on('message', msg => {
                     cansearch = true;
                     search = message.substr(messageparts[0].length);
                     searcharray = search.split(' ');
-                    console.log(JSON.stringify(searcharray));
                     for (let i = 0; i < searcharray.length; i++) {
-                        console.log('out : ' + i);
                         if (forbiddenkeywords.includes(searcharray[i])) {
-                            console.log('in : ' + i);
                             msg.channel.send(msg.guild.roles.find("name", "Admin") + ' C\'est mal, non ?\n```\nMessage de ' + msg.author.tag + ':\n' + msg.content + '```');
                             cansearch = false;
                         }
