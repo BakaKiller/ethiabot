@@ -219,4 +219,6 @@ client.on('message', msg => {
     }
 });
 
-client.login(config.token);
+if (config.token) {
+    client.login(config.token);
+}
