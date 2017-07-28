@@ -5,7 +5,7 @@ const fs = require('fs');
 const request = require('request');
 
 let config = require('./settings.js');
-let help = config.helpintro + get_help() + config.helpoutro;
+let help;
 let message;
 let messageparts;
 
