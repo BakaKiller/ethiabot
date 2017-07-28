@@ -220,5 +220,6 @@ client.on('message', msg => {
 });
 
 if (config.token) {
+    console.log(config.token);
     client.login(config.token);
 }
