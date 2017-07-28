@@ -69,7 +69,7 @@ class Settings {
     }
 
     get token() {
-        return this.Adminusers;
+        return this.Token;
     }
 
     set welcomechan(value) {
