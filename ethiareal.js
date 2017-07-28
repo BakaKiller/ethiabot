@@ -3,44 +3,9 @@ const client = new Discord.Client();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 const request = require('request');
-const help = "Bonjour ! Voici l'aide de ce bot.\n\nPour exécuter une commande, entrez le préfixe défini par les " +
-    "administrateurs immédiatement suivi par la commande de votre choix parmi les suivantes :\n" +
-    "`help`       affiche cette aide.\n" +
-    "`ping`       envoie \"Pong !\"\n" +
-    "`pong`       envoie \"Ping !\"\n" +
-    "`setprefix`  definit le préfixe des commandes (réservé aux administrateurs du bot)\n" +
-    "`hug`        fait un câlin. Vous pouvez marquer quelqu'un en suivant pour une petite phrase spéciale !\n" +
-    "`pat`        fait un headpat\n" +
-    "`blanked`    fout un gros vent\n" +
-    "`nimunimu`   tire les joues\n" +
-    "`slap`       fait preuve de violence\n" +
-    "`cry`        pleure\n" +
-    "`nyan`       fait le chat\n" +
-    "`muahaha`    rit de façon diabolique\n" +
-    "`owo`        est circonspect\n" +
-    "`poke`       est quelque peu éprouvant pour les nerfs\n" +
-    "`kiss`       montre un amour démesuré mais toujours sincère\n" +
-    "`lick`       montre un amour démesuré mais pas toujours sain ?\n" +
-    "`jojo`       exprime son bon goût par l'intermédiaire de memes de bon aloi\n" +
-    "`nibble`     exprime son attirance pour le goût de quelqu'un\n" +
-    "`facepalm`   exprime sa désapointance sur un sujet quelconque\n" +
-    "`clap`       montre une admiration sans égale mais tout à fait placide et platonique\n" +
-    "`blush`      montre une timidité certaine\n" +
-    "`pout`       montre un désaccord peu cordial\n" +
-    "`smile`      fait preuve de joie o/\n" +
-    "`stare`      OwO\n" +
-    "`pantsu`     montre... Enfin, voilà quoi" +
-    "`sparkles`   brille !\n" +
-    "`highfive`   good job maaaaaan\n" +
-    "`nsfw`       [nsfw] moins intéressant que la commande suivante !" +
-    "`gelbooru`   [nsfw] assorti d'un ou plusieurs mot clés...\n" +
-    "\nEn cas de questions, n'hésite pas à t'adresser à <@139512885679357953> !\n\n" +
-    "Une suggestion ? Envoie ça dans <#326780349793435648>\n" +
-    "Une proposition ? Un énième gif ou groupe de gif à ajouter ? Ça se passe à l'adresse suivante :\n" +
-    "Ajouter une ou des catégorie(s) : http://ethiabot.ovh/newcat.php\n" +
-    "Ajouter un ou des gif(s) :        http://ethiabot.ovh/newgif.php";
-let config = require('./settings.js');
 
+let config = require('./settings.js');
+let help = config.helpintro + get_help() + config.helpoutro;
 let message;
 let messageparts;
 
@@ -66,9 +31,23 @@ let forbiddenkeywords = [
     'vore'
 ];
 
-request.get('http://json.ethiabot.ovh/gifs.json', function(error, response, body) {
+request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
     if (!error && response.statusCode === 200) {
         gifs = JSON.parse(body);
+    }
+});
+
+request.get(config.jsonaddress + '/help.json', function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+        let helpjson = JSON.parse(body);
+        let localhelp = '';
+        for (let key in helpjson) {
+            if (!helpjson.hasOwnProperty(key)) {
+                continue;
+            }
+            localhelp += '`' + key + '`    ' + helpjson[key] + "\n";
+        }
+        help = config.helpintro + localhelp + config.helpoutro;
     }
 });
 
@@ -135,18 +114,18 @@ function getgelbooru(search, chan) {
 client.on('messageDelete', function(msg) {
     if (msg.author.id === "130453221331173386") {
         msg.channel.send('<@' + msg.author.id + '> a écrit mais n\'a pas assumé :\n```\n' + msg.content + '\n```')
-    } else if (msg.author.id === "139512885679357953" && msg.content === "test de fou") {
-        msg.channel.send('<@' + msg.author.id + '> a réussi un test ! \n```\n' + msg.content + '\n```');
     }
 });
 
-client.on('guildMemberAdd', function (member) {
-    member.guild.channels.get('298767341620035584').send('Bienvenue à l\'Académie Ethiareal <@' + member.id + '> !');
-});
+if (config.welcomechan) {
+    client.on('guildMemberAdd', function (member) {
+        member.guild.channels.get(config.welcomechan).send('Bienvenue à l\'Académie Ethiareal <@' + member.id + '> !');
+    });
 
-client.on('guildMemberRemove', function(member) {
-    member.guild.channels.get('298767341620035584').send('Au revoir, en espérant te revoir un jour, ' + member.user.tag + '...');
-});
+    client.on('guildMemberRemove', function (member) {
+        member.guild.channels.get(config.welcomechan).send('Au revoir, en espérant te revoir un jour, ' + member.user.tag + '...');
+    });
+}
 
 client.on('message', msg => {
     if (msg.guild) {
@@ -240,4 +219,4 @@ client.on('message', msg => {
     }
 });
 
-client.login('MzI2ODM2MDEwODgzMzUwNTI4.DCslRg.InNrqnYQwXL-anU0eydP_xcuvRc');
+client.login(config.token);
