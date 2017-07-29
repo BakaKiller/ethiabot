@@ -1,8 +1,8 @@
 {
-  "name": "ethiarealbot",
+  "name": "ethiabot",
   "version": "1.0.0",
   "description": "A bot for Ethiareal",
-  "main": "ethiareal.js",
+  "main": "bot.js",
   "dependencies": {
     "discord.js": "^11.1.0",
     "fs": "0.0.1-security",
