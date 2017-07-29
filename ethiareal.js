@@ -3,13 +3,16 @@ const client = new Discord.Client();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 const request = require('request');
-const Custom = require('./custom.js');
 
 let config = require('./settings.js');
 let help;
 let message;
 let messageparts;
-let customfunctions = new Custom(client);
+
+if (fs.existsSync('./custom.js')) {
+    const Custom = require('./custom.js');
+    let customfunctions = new Custom(client);
+}
 
 let prefix = config.prefix;
 let gifs;
@@ -80,15 +83,7 @@ client.on('ready', function () {
 });
 
 client.on('message', msg => {
-    if (msg.guild) {
-        if (msg.guild.id === '332988697630736394') {
-            msg.guild.members.get('301069123591471114').setNickname(msg.guild.members.get('301069123591471114').nickname.toLowerCase());
-        }
-    }
     if (msg.content.substr(0, prefix.length) === prefix) {
-        if (msg.author.id === "163688614205718528") {
-            msg.channel.send('Très bien, ô grande maîtresse, je m\'exécute sur le champs.');
-        }
         message = (msg.content.substr(prefix.length)).toLowerCase();
         messageparts = message.split(' ');
         switch (messageparts[0]) {
