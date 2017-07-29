@@ -14,6 +14,8 @@ class Settings extends EventEmitter{
         this.Helpintro = '';
         this.Helpoutro = '';
         this.Jsonaddress = '';
+        this.Welcome = '';
+        this.Goodbye = '';
         let self = this;
         jsonfile.readFile('settings.json', function (err, obj) {
                 if (err) {
@@ -26,6 +28,8 @@ class Settings extends EventEmitter{
                     self.Helpintro = obj.helpintro;
                     self.Helpoutro = obj.helpoutro;
                     self.Jsonaddress = obj.jsonaddress;
+                    self.Welcome = obj.welcomemessage;
+                    self.Goodbye = obj.goodbyemessage;
                     self.emit('ready');
                 }
         });
@@ -39,7 +43,9 @@ class Settings extends EventEmitter{
             "welcomechan": this.Welcomechan,
             "helpintro": this.Helpintro,
             "helpoutro": this.Helpoutro,
-            "jsonaddress": this.Jsonaddress
+            "jsonaddress": this.Jsonaddress,
+            "welcomemessage": this.Welcome,
+            "goodbyemessage": this.Goodbye
         };
         jsonfile.writeFile('settings.json', settings, function (err) {
             if (err) {
@@ -109,6 +115,24 @@ class Settings extends EventEmitter{
 
     get jsonaddress() {
         return this.Jsonaddress;
+    }
+
+    set welcome(value) {
+        this.Welcome = value;
+        this.save();
+    }
+
+    get welcome() {
+        return this.Welcome;
+    }
+
+    set goodbye(value) {
+        this.Goodbye = value;
+        this.save();
+    }
+
+    get goodbye() {
+        return this.Goodbye;
     }
 }
 

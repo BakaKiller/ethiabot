@@ -67,11 +67,11 @@ config.on('ready', function() {
     // add guild member add and remove functions
     if (config.welcomechan) {
         client.on('guildMemberAdd', function (member) {
-            member.guild.channels.get(config.welcomechan).send('Bienvenue à l\'Académie Ethiareal <@' + member.id + '> !');
+            member.guild.channels.get(config.welcomechan).send(config.welcome.replace('{{memberid}}', member.id).replace('{{membertag}}', member.tag));
         });
 
         client.on('guildMemberRemove', function (member) {
-            member.guild.channels.get(config.welcomechan).send('Au revoir, en espérant te revoir un jour, ' + member.user.tag + '...');
+            member.guild.channels.get(config.welcomechan).send(config.goodbye.replace('{{memberid}}', member.id).replace('{{membertag}}', member.tag));
         });
     }
 
@@ -80,7 +80,7 @@ config.on('ready', function() {
 
 client.on('ready', function () {
     console.log(`Logged in as ${client.user.tag}!`);
-    client.user.setGame(config.prefix + 'help pour l\'aide !');
+    set_help();
 });
 
 client.on('message', msg => {
@@ -98,6 +98,7 @@ client.on('message', msg => {
                 if (isadmin(msg.author.id)) {
                     config.prefix = messageparts[1];
                     prefix = config.prefix;
+                    set_help();
                     msg.reply('Bien reçu ! Maintenant, pour m\'appeler, utilisez le préfixe "' + prefix + '" !');
                 } else {
                     msg.reply('Déso pas déso, seuls les admins ont un pouvoir sur moi !');
@@ -224,4 +225,8 @@ function getgelbooru(search, chan) {
             }
         }
     });
+}
+
+function set_help() {
+    client.user.setGame(config.prefix + 'help pour l\'aide !');
 }
