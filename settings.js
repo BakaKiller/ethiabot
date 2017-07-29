@@ -20,7 +20,7 @@ class Settings extends EventEmitter{
         jsonfile.readFile('settings.json', function (err, obj) {
             console.log(obj);
                 if (err) {
-                    console.log(err.message);
+                    console.log(JSON.stringify(err));
                 } else {
                     self.Adminusers = obj.adminusers;
                     self.Prefix = obj.prefix;
