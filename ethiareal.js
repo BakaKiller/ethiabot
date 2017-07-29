@@ -9,11 +9,6 @@ let help;
 let message;
 let messageparts;
 
-if (fs.existsSync('./custom.js')) {
-    const Custom = require('./custom.js');
-    let customfunctions = new Custom(client);
-}
-
 let prefix = config.prefix;
 let gifs;
 let alertnsfw = "Ce chan n'est pas nsfw ! Vous ne voulez quand même pas invoquer de telles choses à la vue de tous ? :open_mouth:";
@@ -40,6 +35,12 @@ let forbiddenkeywords = [
 // EVENTS **************************************************************************************************************
 
 config.on('ready', function() {
+    // get custom functions if any
+    if (fs.existsSync('./custom.js')) {
+        const Custom = require('./custom.js');
+        let customfunctions = new Custom(client);
+    }
+
     // get gifs list
     request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
         if (!error && response.statusCode === 200) {
