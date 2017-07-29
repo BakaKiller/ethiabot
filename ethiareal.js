@@ -38,7 +38,7 @@ config.on('ready', function() {
     // get custom functions if any
     if (fs.existsSync('./custom.js')) {
         const Custom = require('./custom.js');
-        let customfunctions = new Custom(client);
+        let customfunctions = new Custom(client, config);
     }
 
     // get gifs list
