@@ -18,9 +18,8 @@ class Settings extends EventEmitter{
         this.Goodbye = '';
         let self = this;
         jsonfile.readFile('settings.json', function (err, obj) {
-            console.log(obj);
                 if (err) {
-                    console.log(JSON.stringify(err));
+                    console.log(err.message);
                 } else {
                     self.Adminusers = obj.adminusers;
                     self.Prefix = obj.prefix;
