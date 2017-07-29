@@ -74,6 +74,7 @@ config.on('ready', function() {
 
 client.on('ready', function () {
     console.log(`Logged in as ${client.user.tag}!`);
+    client.user.setGame(config.prefix + 'help pour l\'aide !');
 });
 
 client.on('messageDelete', function(msg) {
