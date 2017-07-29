@@ -3,11 +3,13 @@ const client = new Discord.Client();
 const jsonfile = require('jsonfile');
 const fs = require('fs');
 const request = require('request');
+const Custom = require('./custom.js');
 
 let config = require('./settings.js');
 let help;
 let message;
 let messageparts;
+let customfunctions = new Custom(client);
 
 let prefix = config.prefix;
 let gifs;
@@ -35,7 +37,7 @@ let forbiddenkeywords = [
 // EVENTS **************************************************************************************************************
 
 config.on('ready', function() {
-    //get gifs list
+    // get gifs list
     request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
         if (!error && response.statusCode === 200) {
             gifs = JSON.parse(body);
@@ -75,12 +77,6 @@ config.on('ready', function() {
 client.on('ready', function () {
     console.log(`Logged in as ${client.user.tag}!`);
     client.user.setGame(config.prefix + 'help pour l\'aide !');
-});
-
-client.on('messageDelete', function(msg) {
-    if (msg.author.id === "130453221331173386") {
-        msg.channel.send('<@' + msg.author.id + '> a écrit mais n\'a pas assumé :\n```\n' + msg.content + '\n```')
-    }
 });
 
 client.on('message', msg => {
