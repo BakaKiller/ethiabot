@@ -102,11 +102,11 @@ client.on('ready', function () {
 
 client.on('message', msg => {
     if (is_custom_functioned('message')) {
-        customfunctions.on('message', function (keepgoing) {
+        customfunctions.once('message', function (keepgoing) {
             if (keepgoing) {
                 messageaction(msg);
             }
-        })
+        });
     } else {
         messageaction(msg);
     }
