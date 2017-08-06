@@ -8,6 +8,7 @@ let config = require('./settings.js');
 let help;
 let message;
 let messageparts;
+let customfunctions = false;
 
 let prefix = config.prefix;
 let gifs;
@@ -38,7 +39,7 @@ config.on('ready', function() {
     // get custom functions if any
     if (fs.existsSync('./custom.js')) {
         const Custom = require('./custom.js');
-        let customfunctions = new Custom(client, config);
+        customfunctions = new Custom(client, config);
     }
 
     // get gifs list
@@ -67,11 +68,27 @@ config.on('ready', function() {
     // add guild member add and remove functions
     if (config.welcomechan) {
         client.on('guildMemberAdd', function (member) {
-            member.guild.channels.get(config.welcomechan).send(config.welcome.replace('{{memberid}}', member.id).replace('{{membertag}}', member.tag));
+            if (is_custom_functioned('guildMemberAdd')) {
+                customfunctions.on('guildmemberadd', function (keepgoing) {
+                    if (keepgoing) {
+                        guildmemberadd(member);
+                    }
+                });
+            } else {
+                guildmemberadd(member);
+            }
         });
 
         client.on('guildMemberRemove', function (member) {
-            member.guild.channels.get(config.welcomechan).send(config.goodbye.replace('{{memberid}}', member.id).replace('{{membertag}}', member.tag));
+            if (is_custom_functioned('guildMemberRemove')) {
+                customfunctions.on('guildmemberremove', function (keepgoing) {
+                    if (keepgoing) {
+                        guildmemberremove(member);
+                    }
+                });
+            } else {
+                guildmemberremove(member);
+            }
         });
     }
 
@@ -84,6 +101,38 @@ client.on('ready', function () {
 });
 
 client.on('message', msg => {
+    if (is_custom_functioned('message')) {
+        customfunctions.on('message', function (keepgoing) {
+            if (keepgoing) {
+                messageaction(msg);
+            }
+        })
+    } else {
+        messageaction(msg);
+    }
+});
+
+
+// LIB *****************************************************************************************************************
+
+function isadmin(userid) {
+    return (config.adminusers[userid] !== undefined);
+}
+
+function is_custom_functioned(eventname) {
+    eventname = eventname.toLowerCase();
+    return (customfunctions !== false && customfunctions['on' + eventname] === true)
+}
+
+function guildmemberadd(member) {
+    member.guild.channels.get(config.welcomechan).send(config.welcome.replace('{{memberid}}', member.id).replace('{{membertag}}', member.tag));
+}
+
+function guildmemberremove(member) {
+    member.guild.channels.get(config.welcomechan).send(config.goodbye.replace('{{memberid}}', member.id).replace('{{membertag}}', member.tag));
+}
+
+function messageaction(msg) {
     if (msg.content.substr(0, prefix.length) === prefix) {
         message = (msg.content.substr(prefix.length)).toLowerCase();
         messageparts = message.split(' ');
@@ -166,15 +215,7 @@ client.on('message', msg => {
                 msg.channel.send(get_ultimatum());
         }
     }
-});
-
-
-// LIB *****************************************************************************************************************
-
-function isadmin(userid) {
-    return (config.adminusers[userid] !== undefined);
 }
-
 function get_ultimatum() {
     return 'Hein ? Quoi ? Non, cette fonction n\'existe pas non <<';
 }
