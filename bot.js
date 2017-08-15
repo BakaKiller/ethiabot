@@ -184,7 +184,12 @@ function messageaction(msg) {
             case 'stare':
             case 'pantsu':
             case 'sparkles':
+            case 'food':
             case 'highfive':
+            case 'idc':
+            case 'dance':
+            case 'die':
+            case 'kill':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
             case 'nsfw':
