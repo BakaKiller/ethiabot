@@ -4,6 +4,8 @@ This is a discord bot who's main purpose is to send different kinds of gifs. It 
 to use at [json.ethiabot.ovh](http://json.ethiabot.ovh/gifs.json). Run it whenever you want or forever on a server, with your own
 profile pic !
 
+*This bot is mostly in french, I haven't translated it yet, but if you want to contribute, feel free to do so !*
+
 ## Getting Started
 
 These instructions will make you able to run a wonderful instance of this bot on your local machine or on a remote server ! I assume
