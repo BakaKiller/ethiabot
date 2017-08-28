@@ -25,7 +25,26 @@ and running :
 npm install windows-build-tools --global --add-python-to-path
 ```
 
-Once this is done, we are finally able to install this bot !
+You may need to reboot your computer once it is done.
+
+Then, go to discord's [developer page](https://discordapp.com/developers/applications/me). Login if you aren't logged yet.
+
+Click on `New App` and name your beautiful bot. You also can set it's profile pic right now, or you can do it later, as you wish.
+Just click on `Create App` once first parameters are okay.
+
+You are now ready to create the bot as a Discord Entity.
+
+Click on `Create a Bot user` and **FOR GOD'S SAKE YES DO IT STOP SAYING HOW DANGEROUS IT IS**. Ahem.
+
+Note that a `Click to reveal` Link now has appeared next to a `Token` label. You will need this token later so when you read
+"your Bot User's token", this is what it is about.
+
+Then, you can add your to-be-born bot to your server using the link given by
+[Discord's documentation](https://discordapp.com/developers/docs/topics/oauth2#adding-bots-to-guilds).
+Just remember to change change the client id in the url by your bot's Client ID in the `App Details` block. **Client ID is
+*NOT* the same as Token !**
+
+Follow the instructions and voila ! You are finally able to install this bot !
 
 ### Installing
 
