@@ -6,7 +6,6 @@ const fs = require('fs');
 const request = require('request');
 
 let config = require('./settings.js');
-let help;
 let message;
 let messageparts;
 let customfunctions = false;
@@ -139,8 +138,8 @@ function messageaction(msg) {
                 break;
             case 'sethelp':
                 if (isadmin(msg.author.id)) {
-                    text = messageparts[1];
-                    set_help(text);
+                    delete messageparts[0];
+                    set_help(messageparts.join(' '));
                 } else {
                     msg.reply('Déso pas déso, seuls les admins ont un pouvoir sur moi !');
                 }
