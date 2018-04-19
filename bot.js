@@ -237,7 +237,7 @@ function get_ultimatum() {
 }
 
 function getgif(type) {
-    if (typeof gifs[type] !== undefined && gifs[type].length > 0) {
+    if (typeof gifs[type] !== 'undefined' && gifs[type].length > 0) {
         return gifs[type][Math.floor(Math.random() * gifs[type].length)];
     } else {
         return 'Il n\'y a pas encore de gifs dans cette catégorie !';
@@ -292,7 +292,7 @@ function set_help(text = 'origin') {
     if (text === 'origin') {
         text = config.prefix + 'help pour l\'aide !';
     }
-    if (typeof client.user['setActivity'] === undefined) {
+    if (typeof client.user['setActivity'] === 'undefined') {
         client.user.setGame(text);
     } else {
         client.user.setActivity(text);
