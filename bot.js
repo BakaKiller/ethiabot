@@ -51,20 +51,7 @@ config.on('ready', function() {
     });
 
     // get help
-    request.get(config.jsonaddress + '/help.json', function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-            let helpjson = JSON.parse(body);
-            let localhelp = '';
-            for (let key in helpjson) {
-                if (!helpjson.hasOwnProperty(key)) {
-                    continue;
-                }
-                localhelp += '`' + key + '`    ' + helpjson[key] + "\n";
-            }
-            help = config.helpintro + localhelp + config.helpoutro;
-            help = help.replace('{{prefix}}', config.prefix);
-        }
-    });
+    loadhelp();
 
     // add guild member add and remove functions
     if (config.welcomechan) {
@@ -152,6 +139,11 @@ function messageaction(msg) {
                     msg.reply('Bien reçu ! Maintenant, pour m\'appeler, utilisez le préfixe "' + prefix + '" !');
                 } else {
                     msg.reply('Déso pas déso, seuls les admins ont un pouvoir sur moi !');
+                }
+                break;
+            case 'loadhelp':
+                if (isadmin(msg.author.id)) {
+                    loadhelp(true, msg.channel);
                 }
                 break;
             case 'hug':
@@ -276,4 +268,32 @@ function getgelbooru(search, chan) {
 
 function set_help() {
     client.user.setGame(config.prefix + 'help pour l\'aide !');
+}
+
+function loadhelp(notify = false, channel = null) {
+    request.get(config.jsonaddress + '/help.json', function(error, response, body) {
+        if (channel === null) {
+            notify = false;
+        }
+        if (notify === true) {
+            channel.send('Mise à jour...');
+        }
+        if (!error && response.statusCode === 200) {
+            let helpjson = JSON.parse(body);
+            let localhelp = '';
+            for (let key in helpjson) {
+                if (!helpjson.hasOwnProperty(key)) {
+                    continue;
+                }
+                localhelp += '`' + key + '`    ' + helpjson[key] + "\n";
+            }
+            help = config.helpintro + localhelp + config.helpoutro;
+            help = help.replace('{{prefix}}', config.prefix);
+            if (notify === true) {
+                channel.send('L\'aide a été mise à jour !');
+            }
+        } else if (notify === true) {
+            channel.send('Erreur !');
+        }
+    });
 }
