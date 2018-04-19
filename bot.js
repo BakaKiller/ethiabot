@@ -225,7 +225,7 @@ function messageaction(msg) {
                 }
                 break;
             case 'help':
-                msg.author.send(help);
+                sendhelp(msg.author);
                 break;
             case 'end':
                 msg.channel.send(get_ultimatum());
@@ -316,8 +316,7 @@ function loadhelp(notify = false, channel = null) {
                 }
                 localhelp += '`' + key + '`    ' + helpjson[key] + "\n";
             }
-            help = config.helpintro + localhelp + config.helpoutro;
-            help = help.replace('{{prefix}}', config.prefix);
+            help = localhelp;
             if (notify === true) {
                 channel.send('L\'aide a été mise à jour !');
             }
@@ -325,6 +324,16 @@ function loadhelp(notify = false, channel = null) {
             channel.send('Erreur !');
         }
     });
+}
+
+function prepare_help_string(text) {
+    return text.replace('{{prefix}}', config.prefix);
+}
+
+function sendhelp(user) {
+    user.send(prepare_help_string(config.helpintro));
+    user.send(prepare_help_string(help));
+    user.send(prepare_help_string(config.helpoutro));
 }
 
 function loadgifs(notify = false, channel = null) {
