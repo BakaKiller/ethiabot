@@ -30,7 +30,8 @@ let forbiddenkeywords = [
     'pedophilia',
     'zoophilia',
     'bestiality',
-    'vore'
+    'vore',
+    'moe'
 ];
 
 
