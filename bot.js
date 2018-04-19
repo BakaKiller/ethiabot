@@ -11,6 +11,7 @@ let message;
 let messageparts;
 let customfunctions = false;
 
+let text;
 let prefix = config.prefix;
 let gifs;
 let alertnsfw = "Ce chan n'est pas nsfw ! Vous ne voulez quand même pas invoquer de telles choses à la vue de tous ? :open_mouth:";
@@ -44,11 +45,7 @@ config.on('ready', function() {
     }
 
     // get gifs list
-    request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
-        if (!error && response.statusCode === 200) {
-            gifs = JSON.parse(body);
-        }
-    });
+    loadgifs();
 
     // get help
     loadhelp();
@@ -135,8 +132,22 @@ function messageaction(msg) {
                 if (isadmin(msg.author.id)) {
                     config.prefix = messageparts[1];
                     prefix = config.prefix;
-                    set_help();
                     msg.reply('Bien reçu ! Maintenant, pour m\'appeler, utilisez le préfixe "' + prefix + '" !');
+                } else {
+                    msg.reply('Déso pas déso, seuls les admins ont un pouvoir sur moi !');
+                }
+                break;
+            case 'sethelp':
+                if (isadmin(msg.author.id)) {
+                    text = messageparts[1];
+                    set_help(text);
+                } else {
+                    msg.reply('Déso pas déso, seuls les admins ont un pouvoir sur moi !');
+                }
+                break;
+            case 'resethelp':
+                if (isadmin(msg.author.id)) {
+                    set_help();
                 } else {
                     msg.reply('Déso pas déso, seuls les admins ont un pouvoir sur moi !');
                 }
@@ -144,6 +155,11 @@ function messageaction(msg) {
             case 'loadhelp':
                 if (isadmin(msg.author.id)) {
                     loadhelp(true, msg.channel);
+                }
+                break;
+            case 'loadgifs':
+                if (isadmin(msg.author.id)) {
+                    loadgifs(true, msg.channel);
                 }
                 break;
             case 'hug':
@@ -183,6 +199,8 @@ function messageaction(msg) {
             case 'dance':
             case 'die':
             case 'kill':
+            case 'kawaii':
+            case 'hide':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
             case 'nsfw':
@@ -219,7 +237,11 @@ function get_ultimatum() {
 }
 
 function getgif(type) {
-    return gifs[type][Math.floor(Math.random() * gifs[type].length)];
+    if (typeof gifs[type] !== undefined && gifs[type].length > 0) {
+        return gifs[type][Math.floor(Math.random() * gifs[type].length)];
+    } else {
+        return 'Il n\'y a pas encore de gifs dans cette catégorie !';
+    }
 }
 
 function getnsfwgif(chan, type) {
@@ -266,8 +288,15 @@ function getgelbooru(search, chan) {
     });
 }
 
-function set_help() {
-    client.user.setGame(config.prefix + 'help pour l\'aide !');
+function set_help(text = 'origin') {
+    if (text === 'origin') {
+        text = config.prefix + 'help pour l\'aide !';
+    }
+    if (typeof client.user['setActivity'] === undefined) {
+        client.user.setGame(text);
+    } else {
+        client.user.setActivity(text);
+    }
 }
 
 function loadhelp(notify = false, channel = null) {
@@ -276,7 +305,7 @@ function loadhelp(notify = false, channel = null) {
             notify = false;
         }
         if (notify === true) {
-            channel.send('Mise à jour...');
+            channel.send('Mise à jour de l\'aide...');
         }
         if (!error && response.statusCode === 200) {
             let helpjson = JSON.parse(body);
@@ -293,6 +322,25 @@ function loadhelp(notify = false, channel = null) {
                 channel.send('L\'aide a été mise à jour !');
             }
         } else if (notify === true) {
+            channel.send('Erreur !');
+        }
+    });
+}
+
+function loadgifs(notify = false, channel = null) {
+    if (channel === null) {
+        notify = false;
+    }
+    if (notify === true) {
+        channel.send('Mise à jour des gifs...');
+    }
+    request.get(config.jsonaddress + '/gifs.json', function(error, response, body) {
+        if (!error && response.statusCode === 200) {
+            gifs = JSON.parse(body);
+            if (notify) {
+                channel.send('Les gifs ont été mis à jour !');
+            }
+        } else if (notify) {
             channel.send('Erreur !');
         }
     });
