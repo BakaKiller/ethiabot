@@ -201,6 +201,7 @@ function messageaction(msg) {
             case 'kill':
             case 'kawaii':
             case 'hide':
+            case 'david':
                 msg.channel.send(getgif(messageparts[0]));
                 break;
             case 'nsfw':
